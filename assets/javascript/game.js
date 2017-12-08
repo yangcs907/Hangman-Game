@@ -1,6 +1,4 @@
-//GLOBAL VARIABLES
-//---------------------------------------
-// Used to record how many times a letter can be pressed
+
 var doubleWord = ['a','b','c',
 				  'd','e','f',
 				  'g','h','i',
@@ -10,32 +8,25 @@ var doubleWord = ['a','b','c',
 				  's','t','u',
 				  'v','w','x',
 				  'y','z'];
-//Holds the all the words
 var wordBank =['salmon','tilapia','yellowtail', 'tuna','trout','cod','catfish'];
-//Holds choosenWord
 var choosenWord = "";
-//Holds letters in word
 var lettersInWord = [];
-//Holds number of blanks in word
 var numBlanks = 0;
-//Holds Blanks and successful guesses
 var blanksAndSuccesses =[];
-//Holds Wrong guesses
 var wrongLetters = [];
-//Counters
+//Counters below
 var winCount = 0;
 var loseCount = 0;
 var guessesLeft = 9;
 var rightGuessCounter = 0;
-//FUNCTIONS
-//----------------------------------------
+
 function reset()
 {
-	//Chooses word randombly from the wordBank
+	//Chooses word(type of fish) randombly from the wordBank
 	choosenWord = wordBank[Math.floor(Math.random() * wordBank.length)];
-	//Splits the choosen word into individual letters
+	//Method to split chosen word in individual letters
 	lettersInWord = choosenWord.split('');
-	//Get the number of blanks
+	// Gets length of chosen word
 	numBlanks = lettersInWord.length;
 
 	//RESET
@@ -59,15 +50,11 @@ function reset()
 }
 function startGame()
 {
-	//Chooses word randombly from the wordBank
 	choosenWord = wordBank[Math.floor(Math.random() * wordBank.length)];
-	//Splits the choosen word into individual letters
 	lettersInWord = choosenWord.split('');
-	//Get the number of blanks
 	numBlanks = lettersInWord.length;
 
-	//RESET
-	//===========================================================
+
 	rightGuessCounter = 0;
 	guessesLeft = 9;
 	wrongLetters =[];
@@ -89,23 +76,18 @@ function startGame()
 		document.getElementById('wordToGuess').innerHTML = blanksAndSuccesses;
 	}
 
-	//Changes HTML
+	//Changes HTML to display changes
 	document.getElementById('wordToGuess').innerHTML = blanksAndSuccesses.join(' ');
 	document.getElementById('numGuesses').innerHTML = guessesLeft;
 	document.getElementById('winCounter').innerHTML = winCount;
 	document.getElementById('lossCounter').innerHTML = loseCount;
 	document.getElementById('wrongGuesses').innerHTML = wrongLetters;
-	// Testing / Debugging
-	console.log(choosenWord);
-	console.log(lettersInWord);
-	console.log(numBlanks);
-	console.log(blanksAndSuccesses);
 }
 
 function compareLetters(userKey)
 {
 				console.log('WORKING!');
-				//If user key exist in choosen word then perform this function
+				//If user presses what is in choosen word then fire this function
 				if(choosenWord.indexOf(userKey) > -1)
 				{
 					//Loops depending on the amount of blanks
@@ -119,10 +101,9 @@ function compareLetters(userKey)
 							document.getElementById('wordToGuess').innerHTML = blanksAndSuccesses.join(' ');
 						}
 					}
-					//Test / Debug
-					console.log(blanksAndSuccesses);
+
 				}
-				//Wrong Keys
+
 				else
 				{
 					wrongLetters.push(userKey);
@@ -130,9 +111,7 @@ function compareLetters(userKey)
 					//Changes HTML
 					document.getElementById('numGuesses').innerHTML = guessesLeft;
 					document.getElementById('wrongGuesses').innerHTML = wrongLetters;
-					//Test / Debug
-					console.log('Wrong Letters = ' + wrongLetters);
-					console.log('Guesses left are ' + guessesLeft);
+
 				}
 
 
@@ -140,7 +119,6 @@ function compareLetters(userKey)
 }
 function winLose()
 {
-	// When number blanks if filled with right words then you win
 	if(rightGuessCounter === numBlanks)
 	{
 		//Counts Wins
@@ -162,9 +140,8 @@ function winLose()
 	}
 }
 
-//MAIN PROCCESS
-//-------------------------------------------
-//Initiates the Code
+
+//Starts the Code
 startGame();
 
 document.onkeyup = function(event)
@@ -176,10 +153,7 @@ document.onkeyup = function(event)
 		if(letterGuessed === doubleWord[i] && test === true)
 		{
 			var spliceDword = doubleWord.splice(i,1);
-			//Test / Debug
-			console.log('Double word is = ' + doubleWord[i])
-			console.log('Spliced Word is = ' + spliceDword);
-
+			
 			compareLetters(letterGuessed);
 			winLose();
 		}
